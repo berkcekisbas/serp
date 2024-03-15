@@ -46,6 +46,12 @@ class SerpController extends Controller
                 'message' => "Hiçbir instance dan cevap alınamadı",
                 'data' => null
             ],404);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "Aktif instance bulunamadı",
+                'data' => null
+            ],404);
         }
     }
 
