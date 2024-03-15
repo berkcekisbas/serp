@@ -76,7 +76,7 @@ class SerpController extends Controller
     {
 
         if (is_array(json_decode(Redis::get('instances'),true))) {
-            echo "<strong>".count(Redis::get('instances'))." Adet instance ayakta</strong><br>";
+            echo "<strong>".count(json_decode(Redis::get('instances'))." Adet instance ayakta</strong><br>";
             foreach (json_decode(Redis::get('instances')) as $instance) {
                 echo "<p>".$instance."</p>";
             }
