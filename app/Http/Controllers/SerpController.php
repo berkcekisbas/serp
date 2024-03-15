@@ -6,6 +6,7 @@ use App\Jobs\TorInstanceJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Validator;
 use phpseclib3\Net\SSH2;
 
 class SerpController extends Controller
@@ -15,6 +16,18 @@ class SerpController extends Controller
      */
     public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'q' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => "Query string gerekli",
+                'data' => []
+            ],422);
+        }
+
         if (is_array(json_decode(Redis::get('instances'),true))){
             foreach (json_decode(Redis::get('instances')) as $instance){
                 try {
