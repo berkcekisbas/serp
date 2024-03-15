@@ -28,7 +28,7 @@ class SerpController extends Controller
 
                 if ($q->successful()) {
                     return response()->json([
-                        'status' => false,
+                        'status' => true,
                         'message' => "Sonuç alındı",
                         'data' => mb_convert_encoding($q->body(), 'UTF-8', 'UTF-8')
                     ],404);
