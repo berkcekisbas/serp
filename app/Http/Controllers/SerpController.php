@@ -13,14 +13,14 @@ class SerpController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($q)
+    public function index(Request $request)
     {
         if (is_array(json_decode(Redis::get('instances'),true))){
             foreach (json_decode(Redis::get('instances')) as $instance){
                 try {
                     $q = Http::withOptions([
                         'proxy' => 'socks5://'.env('PROXY_IP').':90'.$instance,
-                    ])->get("https://www.google.com.tr/search?q=".$q."&hl=tr");
+                    ])->get("https://www.google.com.tr/search?q=".$request->get('q')."&hl=tr");
                     $q->body();
                 }catch (\Exception $exception){
                     echo $exception->getMessage();
