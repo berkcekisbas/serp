@@ -45,7 +45,65 @@ class SerpController extends Controller
                         'status' => true,
                         'message' => "Sonuç alındı",
                         'data' => mb_convert_encoding($q->body(), 'UTF-8', 'UTF-8')
-                    ],404);
+                    ],200);
+                }else {
+                    $instances = json_decode(Redis::get('instances'),true);
+                    if (isset($instances[$instance])) {
+                        unset($instances[$instance]);
+                        Redis::set('instances',json_encode($instances));
+                    }
+                }
+            }
+
+            return response()->json([
+                'status' => false,
+                'message' => "Hiçbir instance dan cevap alınamadı",
+                'data' => null
+            ],404);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => "Aktif instance bulunamadı",
+                'data' => null
+            ],404);
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index2(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'q' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => "Query string gerekli",
+                'data' => []
+            ],422);
+        }
+
+        if (is_array(json_decode(Redis::get('instances'),true))){
+            foreach (json_decode(Redis::get('instances')) as $instance){
+                try {
+                    $q = Http::withOptions([
+                        'proxy' => 'socks5://'.env('PROXY_IP').':90'.$instance,
+                    ])->withHeader('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
+                        ->get("https://www.google.com.tr/search?q=".$request->get('q')."&hl=tr");
+                    $q->body();
+                }catch (\Exception $exception){
+                    echo $exception->getMessage();
+                }
+
+                if ($q->successful()) {
+                    return response()->json([
+                        'status' => true,
+                        'message' => "Sonuç alındı",
+                        'data' => mb_convert_encoding($q->body(), 'UTF-8', 'UTF-8')
+                    ],200);
                 }else {
                     $instances = json_decode(Redis::get('instances'),true);
                     if (isset($instances[$instance])) {

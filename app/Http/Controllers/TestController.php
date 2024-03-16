@@ -16,8 +16,15 @@ class TestController extends Controller
      */
     public function test(Request $request)
     {
-        $x = Http::post("http://78.47.162.61/post",['q' => urlencode("berk")]);
-        dd($x->json());
+        try {
+            $client = new \GuzzleHttp\Client();
+            $request = $client->get('http://78.47.162.61',[
+                'query' => ['q' => "xx"]
+            ]);
+            $response = $request->getBody();
+        }catch (\Exception $exception){
+            echo $exception->getMessage();
+        }
     }
 
     /**
