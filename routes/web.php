@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/online', [\App\Http\Controllers\SerpController::class, 'online']);
 Route::get('/', [\App\Http\Controllers\SerpController::class, 'index']);
 Route::post('/post', [\App\Http\Controllers\SerpController::class, 'index']);
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'test']);
