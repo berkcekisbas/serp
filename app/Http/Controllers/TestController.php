@@ -17,8 +17,8 @@ class TestController extends Controller
     public function test(Request $request)
     {        try {
             $client = new \GuzzleHttp\Client();
-            $request = $client->get('http://78.47.162.61/post',[
-                'form_Data' => ['q' => urlencode("q=site:berk.com")]
+            $request = $client->get('http://78.47.162.61',[
+                'query' => ['q' => urlencode("site:berk.com")]
             ]);
             $response = $request->getBody();
             echo $response;
