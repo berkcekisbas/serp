@@ -102,7 +102,7 @@ class SerpController extends Controller
                     return response()->json([
                         'status' => true,
                         'message' => "Sonuç alındı",
-                        'data' => mb_convert_encoding($q->body(), 'UTF-8', 'UTF-8')
+                        'data' => base64_encode(mb_convert_encoding($q->body(), 'UTF-8', 'UTF-8'))
                     ],200);
                 }else {
                     $instances = json_decode(Redis::get('instances'),true);

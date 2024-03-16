@@ -15,13 +15,13 @@ class TestController extends Controller
      * Display a listing of the resource.
      */
     public function test(Request $request)
-    {
-        try {
+    {        try {
             $client = new \GuzzleHttp\Client();
-            $request = $client->get('http://78.47.162.61',[
-                'query' => ['q' => "berk"]
+            $request = $client->get('http://78.47.162.61/post',[
+                'form_Data' => ['q' => urlencode("q=site:berk.com")]
             ]);
             $response = $request->getBody();
+            echo $response;
         }catch (\Exception $exception){
             echo $exception->getMessage();
         }
