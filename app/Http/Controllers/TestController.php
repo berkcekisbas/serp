@@ -19,7 +19,7 @@ class TestController extends Controller
         try {
             $client = new \GuzzleHttp\Client();
             $request = $client->get('http://78.47.162.61',[
-                'query' => ['q' => "xx"]
+                'query' => ['q' => "berk"]
             ]);
             $response = $request->getBody();
         }catch (\Exception $exception){

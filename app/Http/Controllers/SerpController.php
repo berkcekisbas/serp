@@ -34,7 +34,7 @@ class SerpController extends Controller
                     $q = Http::withOptions([
                         'proxy' => 'socks5://'.env('PROXY_IP').':90'.$instance,
                     ])->withHeader('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
-                        ->get("https://www.google.com.tr/search?q=".$request->get('q')."&hl=tr");
+                        ->get("https://www.google.com.tr/search?q=".urlencode($request->get('q'))."&hl=tr");
                     $q->body();
                 }catch (\Exception $exception){
                     echo $exception->getMessage();
@@ -92,7 +92,7 @@ class SerpController extends Controller
                     $q = Http::withOptions([
                         'proxy' => 'socks5://'.env('PROXY_IP').':90'.$instance,
                     ])->withHeader('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
-                        ->get("https://www.google.com.tr/search?q=".$request->get('q')."&hl=tr");
+                        ->get("https://www.google.com.tr/search?q=".urlencode($request->get('q'))."&hl=tr");
                     $q->body();
                 }catch (\Exception $exception){
                     echo $exception->getMessage();
