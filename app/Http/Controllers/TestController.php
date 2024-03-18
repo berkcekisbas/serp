@@ -20,8 +20,8 @@ class TestController extends Controller
             $request = $client->get('http://78.47.162.61',[
                 'query' => ['q' => urlencode("site:berk.com")]
             ]);
-            $response = $request->getBody();
-            echo $response;
+            $response = json_decode($request->getBody(),true);
+            echo htmlspecialchars($response['data']);
         }catch (\Exception $exception){
             echo $exception->getMessage();
         }
