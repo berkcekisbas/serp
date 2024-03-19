@@ -43,6 +43,7 @@ class tornodecreremove extends Command
         for ($x = 0; $x <= 100; $x++) {
 
             $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
+            $ex = $ssh->exec('systemctl disable tor@'.sprintf("%02d",$x));
             $this->line($ex);
   //          $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
             //$this->line($ex);
