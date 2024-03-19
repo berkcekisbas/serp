@@ -39,17 +39,17 @@ class TorInstanceJob implements ShouldQueue
             if ($q->successful()) {
                 $this->addOnlineInstance($this->name);
                 Log::debug("Oooooley Tor Instance ".$this->name." Başarılı !");
-                $this->release(120);
+                $this->release(60);
             } else {
                 try {
                     $ssh = new SSH2(env('PROXY_IP'), 22, 60);
                     if (!$ssh->login("root", env('PROXY_ROOT_PASSWORD'))) {
-                        $this->release(2);
+                        $this->release(1);
                     }
                     $ssh->setTimeout(0);
                 } catch (\Exception $exception) {
                     $this->deleteOfflineInstance($this->name);
-                    $this->release(2);
+                    $this->release(1);
                 }
 
                 $ex = $ssh->exec('systemctl restart tor@'.$this->name);
@@ -58,12 +58,12 @@ class TorInstanceJob implements ShouldQueue
                 $this->deleteOfflineInstance($this->name);
 
 
-                $this->release(2);
+                $this->release(1);
             }
         } catch (\Exception $exception){
             $instances = json_decode(Redis::get('instances'));
             $this->deleteOfflineInstance($this->name);
-            $this->release(2);
+            $this->release(1);
         }
     }
 
