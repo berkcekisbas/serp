@@ -43,6 +43,7 @@ class CreateServices extends Command
 
         for ($x = 0; $x <= env('PROXY_INSTANCE_COUNT'); $x++) {
             $ex = $ssh->exec('tor-instance-create '.sprintf("%02d",$x));
+            $this->line($x." Numaralı servis oluşturuldu");
         }
     }
 }
