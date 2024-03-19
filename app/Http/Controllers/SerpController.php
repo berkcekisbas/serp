@@ -32,7 +32,7 @@ class SerpController extends Controller
             foreach (json_decode(Redis::get('instances')) as $instance){
                 try {
                     $q = Http::withOptions([
-                        'proxy' => 'socks5://'.env('PROXY_IP').':90'.$instance,
+                        'proxy' => 'socks5://'.env('PROXY_IP').':9'.$instance,
                     ])->withHeader('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
                         ->get("https://www.google.com.tr/search?q=".urlencode($request->get('q'))."&hl=tr");
                     $q->body();
