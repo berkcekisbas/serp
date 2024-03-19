@@ -62,6 +62,7 @@ class TorInstanceJob implements ShouldQueue
                 $this->release(2);
             }
         } catch (\Exception $exception){
+            Log::debug("Başarısız".$exception->getMessage());
             $instances = json_decode(Redis::get('instances'));
             $this->deleteOfflineInstance($this->name);
             $this->release(2);
