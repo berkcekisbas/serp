@@ -33,7 +33,7 @@ class TorInstanceJob implements ShouldQueue
     {
         try {
             $q = Http::withOptions([
-                'proxy' => 'socks5://'.env('PROXY_IP').':90'.$this->name
+                'proxy' => 'socks5://'.env('PROXY_IP').':9'.$this->name
             ])->get("https://www.google.com.tr/search?q=berk&hl=tr");
 
             if ($q->successful()) {
