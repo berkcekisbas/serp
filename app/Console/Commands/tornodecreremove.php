@@ -40,7 +40,7 @@ class tornodecreremove extends Command
             return 1;
         }
 
-        for ($x = 0; $x <= 10; $x++) {
+        for ($x = 0; $x <= 100; $x++) {
 
             $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
             $this->line($ex);
