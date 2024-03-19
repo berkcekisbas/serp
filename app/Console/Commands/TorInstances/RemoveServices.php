@@ -44,6 +44,7 @@ class RemoveServices extends Command
         for ($x = 0; $x <= env('PROXY_INSTANCE_COUNT'); $x++) {
             $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
             $ex = $ssh->exec('systemctl disable tor@'.sprintf("%02d",$x));
+            $ex = $ssh->exec("rm -Rf /etc/tor/instances/".sprintf("%02d",$x));
             $this->line($ex);
         }
     }
