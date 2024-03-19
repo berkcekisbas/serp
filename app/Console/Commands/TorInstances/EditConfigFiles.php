@@ -42,8 +42,8 @@ class EditConfigFiles extends Command
         }
 
         for ($x = 0; $x <= env('PROXY_INSTANCE_COUNT'); $x++) {
-            $command = "sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:9" . sprintf("%02d", $x) . "/' /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
-            $command .= " && sudo echo 'ExitPolicy reject *:* >> /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
+            $command = "sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:" . sprintf("%02d", $x) . "/' /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
+            $command .= " && sudo sh -c 'echo \"ExitPolicy reject *:*\" >> /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc'";
             $ex = $ssh->exec($command);
             $this->line($ex);
             $ex = $ssh->exec('systemctl start tor@'.sprintf("%02d",$x));
