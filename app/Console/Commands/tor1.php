@@ -43,7 +43,16 @@ class tor1 extends Command
 
         for ($x = 0; $x <= env('PROXY_INSTANCE_COUNT'); $x++) {
             $ex = $ssh->exec('tor-instance-create '.sprintf("%02d",$x));
-            $ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 0.0.0.0:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
+
+
+            // $x değişkeni, instance numarasını belirtir.
+            $x = 1; // Örnek olarak 1 numaralı instance kullanılmıştır.
+
+            $command = "sudo sed -i 's/SocksPort auto/SocksPort 0.0.0.0:90" . sprintf("%02d", $x) . "/' /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
+            $command .= " && sudo echo 'ExitPolicy reject *:*" . sprintf("%02d", $x) . "/' >> /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
+            $ex = $ssh->exec($command);
+
+            //$ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
             $ex = $ssh->exec('systemctl start tor@'.sprintf("%02d",$x));
             $this->line("tor@".$x." Servis Başlatıldı");
 

@@ -14,7 +14,7 @@ class tornode extends Command
      *
      * @var string
      */
-    protected $signature = 'app:tor:node:check';
+    protected $signature = 'app:tor:node:job';
 
     /**
      * The console command description.

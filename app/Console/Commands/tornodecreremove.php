@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use phpseclib3\Crypt\PublicKeyLoader;
 use phpseclib3\Net\SSH2;
-class tornodecreate extends Command
+class tornodecreremove extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:tor:node:create';
+    protected $signature = 'app:tor:node:remove';
 
     /**
      * The console command description.
@@ -40,11 +40,9 @@ class tornodecreate extends Command
             return 1;
         }
 
-        for ($x = 0; $x <= 10; $x++) {
+        for ($x = 0; $x <= env('PROXY_INSTANCE_COUNT'); $x++) {
 
-            $ex = $ssh->exec('tor-instance-create '.sprintf("%02d",$x));
-            $ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 0.0.0.0:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
-            $ex = $ssh->exec('systemctl start tor@'.sprintf("%02d",$x));
+            $ex = $ssh->exec('tor-instance-remove '.sprintf("%02d",$x));
   //          $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
             //$this->line($ex);
         }
