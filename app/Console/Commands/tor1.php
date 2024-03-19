@@ -47,7 +47,7 @@ class tor1 extends Command
             //$x = 1; // Örnek olarak 1 numaralı instance kullanılmıştır.
 
             $command = "sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:90" . sprintf("%02d", $x) . "/' /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
-            $command .= " && sudo echo 'ExitPolicy reject *:*" . sprintf("%02d", $x) . "/' >> /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
+            $command .= " && sudo echo 'ExitPolicy reject *:* >> /etc/tor/instances/" . sprintf("%02d", $x) . "/torrc";
             $ex = $ssh->exec($command);
 
             //$ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
