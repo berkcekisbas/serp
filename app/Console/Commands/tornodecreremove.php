@@ -28,7 +28,7 @@ class tornodecreremove extends Command
     public function handle()
     {
         try {
-            $ssh = new SSH2("192.168.1.44", 22, 60);
+            $ssh = new SSH2("127.0.0.1", 22, 60);
             if (!$ssh->login("root", '32334466')) {
                 $this->line("HATA SSH BAĞLANAMADI");
                 return 1;
