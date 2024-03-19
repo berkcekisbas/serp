@@ -43,7 +43,7 @@ class tornodecreate extends Command
         for ($x = 0; $x <= 10; $x++) {
 
             $ex = $ssh->exec('tor-instance-create '.sprintf("%02d",$x));
-            $ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 0.0.0.0:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
+            $ex = $ssh->exec("sudo sed -i 's/SocksPort auto/SocksPort 127.0.0.1:90".sprintf("%02d",$x)."/' /etc/tor/instances/".sprintf("%02d",$x)."/torrc");
             $ex = $ssh->exec('systemctl start tor@'.sprintf("%02d",$x));
   //          $ex = $ssh->exec('systemctl stop tor@'.sprintf("%02d",$x));
             //$this->line($ex);
