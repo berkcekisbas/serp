@@ -15,7 +15,10 @@ class TestController extends Controller
      * Display a listing of the resource.
      */
     public function test(Request $request)
-    {        try {
+    {
+        echo phpinfo();
+        exit;
+        try {
             $client = new \GuzzleHttp\Client();
             $request = $client->get('http://78.47.162.61',[
                 'query' => ['q' => urlencode("site:berk.com")]
